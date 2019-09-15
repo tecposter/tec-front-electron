@@ -1,0 +1,76 @@
+$list-margin-bottom-normal: .2rem;
+$list-padding-bottom-normal: .2rem;
+
+$list-margin-bottom-closely: .1rem;
+$list-padding-bottom-closely: .1rem;
+
+$list-margin-bottom-scattered: .5rem;
+
+$list-striped-background: get-color(light-gray);
+$list-hovered-background: get-color(dark-gray);
+
+@mixin gap-list {
+
+    .list {
+        > .item {
+            //border-bottom: 1px solid get-color(light-gray);
+            margin-bottom: $list-margin-bottom-normal;
+            padding-bottom: $list-padding-bottom-normal;
+
+            & .title {
+                margin-bottom: 0;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        &.striped {
+            > .item {
+                border-bottom: 0;
+                margin-bottom: 0;
+                padding: 1rem;
+
+                &:nth-child(even) {
+                    background: $list-striped-background;
+                }
+            }
+        }
+
+        &.closely {
+            > .item {
+                margin-bottom: $list-margin-bottom-closely;
+                padding-bottom: $list-padding-bottom-closely;
+            }
+        }
+
+        &.scattered {
+            > .item {
+                margin-bottom: $list-margin-bottom-scattered;
+            }
+        }
+
+        &.dashed {
+            > .item {
+                border-bottom-style: dashed;
+            }
+        }
+
+        &.hovered {
+            > .item {
+                border-bottom: 0;
+                padding: 0;
+
+                &:hover {
+                    background: $list-hovered-background;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,63 @@
+@import './lib/gap/normalize.ex';
+@import './lib/gap/color';
+@import './lib/gap/typography';
+@import './lib/gap/table';
+
+@import './lib/gap/btn';
+@import './lib/gap/list';
+@import './lib/gap/float';
+@import './lib/gap/form';
+@import './lib/gap/card';
+@import './lib/gap/mask';
+
+$global-font-size: 100% !default;
+
+$body-margin: 0 !default;
+$body-padding: 0 !default;
+$body-font-family: PingFangSC, 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif !default;
+$body-font-weight: normal !default;
+$body-line-height: 1.5 !default;
+
+$list-margin: 0 0 0 1.25rem;
+$list-padding: 0;
+
+html {
+    box-sizing: border-box;
+    font-size: $global-font-size;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    background: get-color(background);
+    color: get-color(on-background);
+
+    font-family: $body-font-family;
+    font-weight: $body-font-weight;
+    line-height: $body-line-height;
+
+    margin: $body-margin;
+    padding: $body-padding;
+}
+
+ul,
+ol {
+    line-height: 1.6;
+    list-style-position: outside;
+    margin: $list-margin;
+    padding: $list-padding;
+}
+
+pre {
+    code {
+        font-size: .85rem;
+    }
+}
+
+.hide {
+    display: none;
+}

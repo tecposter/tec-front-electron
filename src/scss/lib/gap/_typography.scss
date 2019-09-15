@@ -1,0 +1,24 @@
+$title-margin: 0 !default;
+$title-sizes: (
+    xlarge: 2.3rem,
+    large: 2rem,
+    normal: 1.6rem,
+    small: 1.2rem,
+    tiny: .9rem
+) !default;
+
+@mixin gap-typography {
+    .title {
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1.5;
+        margin: $title-margin;
+        text-rendering: optimizeLegibility;
+
+        @each $item, $size in $title-sizes {
+            &.#{$item} {
+                font-size: $size;
+            }
+        }
+    }
+}

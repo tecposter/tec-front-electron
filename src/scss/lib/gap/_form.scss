@@ -1,0 +1,62 @@
+$label-margin: 0 0 .5rem;
+
+$input-padding: .3rem .7rem;
+$input-margin: 0;
+
+$form-content-margin: 1rem !default;
+
+@mixin gap-form {
+    label {
+        display: block;
+        font-size: 1rem;
+        font-weight: normal;
+        line-height: 1.5;
+        margin: $label-margin;
+    }
+
+    [type='text'],
+    [type='password'],
+    [type='date'],
+    [type='datetime'],
+    [type='datetime-local'],
+    [type='month'],
+    [type='week'],
+    [type='email'],
+    [type='number'],
+    [type='search'],
+    [type='tel'],
+    [type='time'],
+    [type='url'],
+    [type='color'],
+    textarea {
+        appearance: none;
+        //background-color: #fefefe;
+        border: 1px solid get-color(light-gray);
+        border-radius: 0;
+        box-shadow: inset 0 1px 2px get-color(on-surface);
+        box-sizing: border-box;
+        //color: #0a0a0a;
+        display: block;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: normal;
+        height: 2.4375rem;
+        line-height: 1.5;
+        margin: $input-margin;
+        padding: $input-padding;
+        transition: box-shadow .5s, border-color .25s ease-in-out;
+        width: 100%;
+
+        &:focus {
+            //background-color: #fefefe;
+            border: 1px solid get-color(dark-gray);
+            box-shadow: 0 0 5px get-color(on-surface);
+            outline: none;
+            transition: box-shadow .5s, border-color .25s ease-in-out;
+        }
+    }
+
+    .form-content {
+        padding: $form-content-margin;
+    }
+}

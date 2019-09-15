@@ -1,0 +1,34 @@
+$card-margin: 0 0 1rem;
+$card-border-radius: 2px;
+$card-box-shadow: 0 1px 4px 0 get-color(on-background);
+
+@mixin gap-card {
+    .card {
+        background: get-color(surface);
+        border: 0;
+        border-radius: $card-border-radius;
+        box-shadow: $card-box-shadow;
+        color: get-color(on-surface);
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: $card-margin;
+        overflow: inherit;
+
+        & > .divider {
+            border-bottom: 1px solid get-color(light-gray);
+            display: flex;
+            flex: 0 1 auto;
+            padding: 1rem;
+
+            & > :last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        & > .section {
+            flex: 1 0 auto;
+            padding: 1rem;
+        }
+    }
+}

@@ -1,0 +1,109 @@
+// https://material.io/design/color/the-color-system.html#color-theme-creation
+$gap-palette: (
+) !default;
+
+$gap-palette-default: (
+    primary: #127abf,
+    light-primary: #5da9f2,
+    dark-primary: #004f8e,
+
+    secondary: #ff6d00,
+    light-secondary: #ff9e40,
+    dark-secondary: #c43c00,
+
+    background: #f7f7f7,
+    surface: #fff,
+    error: #ff7a78,
+
+    light-gray: #e7e7e7,
+    medium-gray: #b7b7b7,
+    dark-gray: #c7c7c7,
+
+    on-primary: #fff,
+    on-light-primary: #000,
+    on-dark-primary: #fff,
+
+    on-secondary: #000,
+    on-light-secondary: #000,
+    on-dark-secondary: #fff,
+
+    on-background: #474a52,
+    on-surface: #474a52,
+    on-error: #fff,
+) !default;
+
+@function get-color($name, $alpha: 1) {
+    $tmp-color: #c51162;
+
+    @if map-has-key($gap-palette, $name) {
+        $tmp-color: map-get($gap-palette, $name);
+    } @else if map-has-key($gap-palette-default, $name) {
+        $tmp-color: map-get($gap-palette-default, $name);
+    } @else {
+        @error 'given $name is not available in $gap-palette';
+    }
+
+    @if $alpha == 1 {
+        @return $tmp-color;
+    } @else {
+        @return rgba($tmp-color, $alpha);
+    }
+}
+
+@mixin gap-color {
+    .primary-tint {
+        background: get-color(primary);
+        color: get-color(on-primary);
+
+        a {
+            color: inherit;
+        }
+
+        &.light {
+            background: get-color(light-primary);
+            color: get-color(on-light-primary);
+        }
+
+        &.dark {
+            background: get-color(dark-primary);
+            color: get-color(on-dark-primary);
+        }
+    }
+
+    .secondary-tint {
+        background: get-color(secondary);
+        color: get-color(on-secondary);
+
+        a {
+            color: inherit;
+        }
+
+        &.light {
+            background: get-color(light-secondary);
+            color: get-color(on-light-secondary);
+        }
+
+        &.dark {
+            background: get-color(dark-secondary);
+            color: get-color(on-dark-secondary);
+        }
+    }
+
+    .background-tint {
+        background: get-color(background);
+        color: get-color(on-background);
+
+        a {
+            color: get-color(primary);
+        }
+    }
+
+    .surface-tint {
+        background: get-color(surface);
+        color: get-color(on-surface);
+
+        a {
+            color: get-color(primary);
+        }
+    }
+}

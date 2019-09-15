@@ -1,0 +1,32 @@
+$ctn-margin: 0 auto;
+$ctn-padding: 0 1rem;
+$ctn-max-width: 62.5rem;
+
+$page-header-height: 4rem;
+$page-header-margin: 0 0 1rem;
+
+.ctn {
+    margin: $ctn-margin;
+    max-width: $ctn-max-width;
+    padding: $ctn-padding;
+}
+
+.page {
+    .page-header {
+        height: $page-header-height;
+        margin: $page-header-margin;
+    }
+
+    .page-header-fixed {
+        box-shadow: 0 1px 7px get-color(on-background, .7);
+        height: $page-header-height;
+        left: 0;
+        position: fixed;
+        width: 100%;
+        z-index: 999;
+
+        .title {
+            line-height: $page-header-height;
+        }
+    }
+}

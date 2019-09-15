@@ -1,0 +1,66 @@
+$mask-background: rgba(44, 56, 71, .66);
+$mask-outer-margin: 0;
+$pop-shadow-color: rgba(44, 56, 71, .5);
+$pop-background: #fff;
+$pop-margin: 78px auto 0;
+
+@mixin gap-mask {
+    .gap-mask-outer {
+        border: 0;
+        font: inherit;
+        font-size: 100%;
+        margin: $mask-outer-margin;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        vertical-align: baseline;
+        width: 100%;
+        z-index: 10000;
+    }
+
+    .gap-mask {
+        background: $mask-background;
+        height: 100%;
+        left: 0;
+        overflow-y: auto;
+        position: fixed;
+        top: 0;
+        width: 100%;
+
+        .pop {
+            background: $pop-background;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px 0 $pop-shadow-color;
+            height: auto;
+            left: 0;
+            margin: $pop-margin;
+            position: absolute;
+            right: 0;
+            width: 90%;
+            z-index: 77;
+
+            &.broad {
+                height: 98%;
+                margin-top: 1%;
+                width: 98%;
+            }
+
+            input,
+            select,
+            textarea {
+                border-radius: 2px;
+            }
+        }
+    }
+
+    @media screen and (min-width: 40rem) {
+        .gap-mask {
+
+            .pop {
+                margin-top: 100px;
+                width: 700px;
+            }
+        }
+    }
+
+}
