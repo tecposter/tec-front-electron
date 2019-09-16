@@ -27,6 +27,7 @@
  */
 
 import './scss/main.scss';
+/*
 import * as monaco from 'monaco-editor';
 import 'markdown';
 
@@ -40,5 +41,13 @@ monaco.editor.create(document.getElementById('editor-coder'), {
     wordWrapMinified: true,
     wrappingIndent: 'same'
 });
+*/
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+// console.log('👋 This message is being logged by "renderer.js", included via webpack');
+
+import {asMonaco} from 'markdown';
+
+(async () => {
+  const monaco = await asMonaco();
+  console.log(monaco);
+})();

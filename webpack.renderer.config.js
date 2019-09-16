@@ -1,7 +1,11 @@
+// https://github.com/webpack-contrib/copy-webpack-plugin
+
 const rules = require('./webpack.rules');
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+// const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+
 /*
 rules.push({
   test: /\.css$/,
@@ -28,11 +32,16 @@ module.exports = {
     rules,
   },
   plugins: [
+    new CopyPlugin([
+      {from: 'raw', to: './'}
+    ])
+    /*
     new MonacoWebpackPlugin(),
     new webpack.NormalModuleReplacementPlugin(
       /vs\/base\/common\/insane\/insane.js/,
       __dirname + '/node_modules/insane/insane.js'
     )
+    */
   ],
   resolve: {
     modules: [

@@ -3,3 +3,4 @@ babel.config.js
 webpack.main.config.js
 webpack.renderer.config.js
 webpack.rules.js
+raw
