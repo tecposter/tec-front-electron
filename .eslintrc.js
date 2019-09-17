@@ -4,7 +4,7 @@ module.exports = {
     "es6": true,
     "jest": true
   },
-  "extends": "eslint:recommended",
+  "extends": "airbnb-base",
   "parserOptions": {
     "sourceType": "module"
   },
@@ -29,5 +29,15 @@ module.exports = {
   "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["lib"]
+      }
+    }
   }
 };
+
+// ESLint: Unable to resolve path to module 
+// https://github.com/kriasoft/react-starter-kit/issues/1180

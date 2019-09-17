@@ -6,6 +6,7 @@
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
+    "dev": "electron-forge start --inspect-electron",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -86,8 +87,8 @@
     "css-loader": "^3.0.0",
     "electron": "6.0.9",
     "eslint": "^6.4.0",
-    "insane": "^2.6.2",
-    "monaco-editor-webpack-plugin": "^1.7.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "node-loader": "^0.6.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.0",

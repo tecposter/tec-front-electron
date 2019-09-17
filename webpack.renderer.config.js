@@ -35,13 +35,6 @@ module.exports = {
     new CopyPlugin([
       {from: 'raw', to: './'}
     ])
-    /*
-    new MonacoWebpackPlugin(),
-    new webpack.NormalModuleReplacementPlugin(
-      /vs\/base\/common\/insane\/insane.js/,
-      __dirname + '/node_modules/insane/insane.js'
-    )
-    */
   ],
   resolve: {
     modules: [

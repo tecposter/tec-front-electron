@@ -45,9 +45,12 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 
 // console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
-import {asMonaco} from 'markdown';
+import asMarkdown from 'as-markdown';
 
 (async () => {
-  const monaco = await asMonaco();
-  console.log(monaco);
+  const ctn = {};
+  const content = 'test';
+  const markdown = await asMarkdown(ctn, content);
+
+  console.log(markdown);
 })();
