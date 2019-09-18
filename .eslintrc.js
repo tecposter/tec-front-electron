@@ -24,7 +24,10 @@ module.exports = {
     "semi": [
       "error",
       "always"
-    ]
+    ],
+    "no-unused-expressions": ['error', {
+      allowTaggedTemplates: true,
+    }],
   },
   "parserOptions": {
     "ecmaVersion": 2017,
