@@ -196,3 +196,25 @@ html, body, .page {
   height: 100%;
   overflow: hidden;
 }
+
+.page-ctn {
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+
+  .side-bar {
+    order: 1;
+    width: 210px;
+    border-right: 1px solid #474a52b3;
+  }
+
+  .main-board {
+    height: 100%;
+    flex: 1 auto;
+    order: 2;
+  }
+
+  .main-panel {
+    height: 100%;
+  }
+}

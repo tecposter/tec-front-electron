@@ -46,15 +46,20 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 // console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
 import asMarkdown from 'as-markdown';
-import { oneElem, createElem } from 'gap/web';
+import PageCtn from 'PageCtn';
+import { oneElem } from 'gap/web';
 
+/*
 const pageElem = oneElem('.page');
 const ctnElem = createElem('div');
 pageElem.appendChild(ctnElem);
+*/
+
+const pageCtn = new PageCtn(oneElem('.page'));
 
 (async () => {
   const content = '# Article Title';
-  const markdown = await asMarkdown(ctnElem, content);
+  const markdown = await asMarkdown(pageCtn.getMainPanel(), content);
 
   console.log(markdown);
 })();
