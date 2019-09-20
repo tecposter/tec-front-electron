@@ -200,12 +200,19 @@ html, body, .page {
 .page-ctn {
   height: 100%;
   display: flex;
-  flex-flow: row wrap;
+  margin: 0;
+  box-sizing: border-box;
+
+  .column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
   .side-bar {
-    order: 1;
     width: 210px;
     border-right: 1px solid #474a52b3;
+    flex-shrink: 0;
   }
 
   .main-board {
@@ -216,5 +223,6 @@ html, body, .page {
 
   .main-panel {
     height: 100%;
+    flex-grow: 1;
   }
 }
