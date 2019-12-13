@@ -59,7 +59,8 @@ const pageCtn = new PageCtn(oneElem('.page'));
 
 (async () => {
   const content = '# Article Title';
-  const markdown = await asMarkdown(pageCtn.getMainPanel(), content);
+  // const markdown = await asMarkdown(pageCtn.getMainPanel(), content);
+  await asMarkdown(pageCtn.getMainPanel(), content);
 
-  console.log(markdown);
+  // console.log(markdown);
 })();

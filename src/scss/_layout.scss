@@ -1,0 +1,38 @@
+$page-ctn-margin: 0;
+
+html,
+body,
+.page {
+  height: 100%;
+  overflow: hidden;
+}
+
+.page-ctn {
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  margin: $page-ctn-margin;
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .side-bar {
+    border-right: 1px solid get-color(dark-gray);
+    flex-shrink: 0;
+    width: 210px;
+  }
+
+  .main-board {
+    flex: 1 auto;
+    height: 100%;
+    order: 2;
+  }
+
+  .main-panel {
+    flex-grow: 1;
+    height: 100%;
+  }
+}

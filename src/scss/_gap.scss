@@ -22,42 +22,42 @@ $list-margin: 0 0 0 1.25rem;
 $list-padding: 0;
 
 html {
-    box-sizing: border-box;
-    font-size: $global-font-size;
+  box-sizing: border-box;
+  font-size: $global-font-size;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    background: get-color(background);
-    color: get-color(on-background);
+  background: get-color(background);
+  color: get-color(on-background);
 
-    font-family: $body-font-family;
-    font-weight: $body-font-weight;
-    line-height: $body-line-height;
+  font-family: $body-font-family;
+  font-weight: $body-font-weight;
+  line-height: $body-line-height;
 
-    margin: $body-margin;
-    padding: $body-padding;
+  margin: $body-margin;
+  padding: $body-padding;
 }
 
 ul,
 ol {
-    line-height: 1.6;
-    list-style-position: outside;
-    margin: $list-margin;
-    padding: $list-padding;
+  line-height: 1.6;
+  list-style-position: outside;
+  margin: $list-margin;
+  padding: $list-padding;
 }
 
 pre {
-    code {
-        font-size: .85rem;
-    }
+  code {
+    font-size: .85rem;
+  }
 }
 
 .hide {
-    display: none;
+  display: none;
 }
