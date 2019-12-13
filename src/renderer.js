@@ -45,7 +45,7 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 
 // console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
-import asMarkdown from 'as-markdown';
+import { asCreateMarkdown } from 'markdown';
 import PageCtn from 'PageCtn';
 import { oneElem } from 'gap/web';
 
@@ -60,7 +60,39 @@ const pageCtn = new PageCtn(oneElem('.page'));
 (async () => {
   const content = '# Article Title';
   // const markdown = await asMarkdown(pageCtn.getMainPanel(), content);
-  await asMarkdown(pageCtn.getMainPanel(), content);
+  await asCreateMarkdown(
+    pageCtn.getMainPanel(),
+    content,
+    {
+      hljsRes: {
+        csses: ['/hljs/styles/default.css'],
+        jses: [
+          '/hljs/highlight.pack.js',
+        ],
+      },
+      katexRes: {
+        csses: ['/katex/katex.min.css'],
+        jses: ['/katex/katex.min.js'],
+      },
+      markdownitRes: {
+        jses: ['/mdit/markdown-it.min.js'],
+      },
+      monacoRes: {
+        path: '/monaco/min/vs',
+        csses: [
+          [
+            '/monaco/min/vs/editor/editor.main.css',
+            { 'data-name': 'vs/editor/editor.main' },
+          ],
+        ],
+        jses: [
+          '/monaco/min/vs/loader.js',
+          '/monaco/min/vs/editor/editor.main.nls.js',
+          '/monaco/min/vs/editor/editor.main.js',
+        ],
+      },
+    },
+  );
 
   // console.log(markdown);
 })();
