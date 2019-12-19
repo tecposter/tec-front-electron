@@ -46,8 +46,9 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 // console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
 import { asCreateMarkdown } from 'markdown';
-import PageCtn from 'PageCtn';
 import { oneElem } from 'gap/web';
+import PageCtn from 'PageCtn';
+import PostList from 'PostList';
 
 /*
 const pageElem = oneElem('.page');
@@ -55,44 +56,55 @@ const ctnElem = createElem('div');
 pageElem.appendChild(ctnElem);
 */
 
-const pageCtn = new PageCtn(oneElem('.page'));
+const createMD = (ctn, content) => asCreateMarkdown(
+  ctn,
+  content,
+  {
+    hljsRes: {
+      csses: ['/hljs/styles/default.css'],
+      jses: [
+        '/hljs/highlight.pack.js',
+      ],
+    },
+    katexRes: {
+      csses: ['/katex/katex.min.css'],
+      jses: ['/katex/katex.min.js'],
+    },
+    markdownitRes: {
+      jses: ['/mdit/markdown-it.min.js'],
+    },
+    monacoRes: {
+      path: '/monaco/min/vs',
+      csses: [
+        [
+          '/monaco/min/vs/editor/editor.main.css',
+          { 'data-name': 'vs/editor/editor.main' },
+        ],
+      ],
+      jses: [
+        '/monaco/min/vs/loader.js',
+        '/monaco/min/vs/editor/editor.main.nls.js',
+        '/monaco/min/vs/editor/editor.main.js',
+      ],
+    },
+  },
+);
 
 (async () => {
+  const pageCtn = new PageCtn(oneElem('.page'));
   const content = '# Article Title';
   // const markdown = await asMarkdown(pageCtn.getMainPanel(), content);
-  await asCreateMarkdown(
-    pageCtn.getMainPanel(),
-    content,
-    {
-      hljsRes: {
-        csses: ['/hljs/styles/default.css'],
-        jses: [
-          '/hljs/highlight.pack.js',
-        ],
-      },
-      katexRes: {
-        csses: ['/katex/katex.min.css'],
-        jses: ['/katex/katex.min.js'],
-      },
-      markdownitRes: {
-        jses: ['/mdit/markdown-it.min.js'],
-      },
-      monacoRes: {
-        path: '/monaco/min/vs',
-        csses: [
-          [
-            '/monaco/min/vs/editor/editor.main.css',
-            { 'data-name': 'vs/editor/editor.main' },
-          ],
-        ],
-        jses: [
-          '/monaco/min/vs/loader.js',
-          '/monaco/min/vs/editor/editor.main.nls.js',
-          '/monaco/min/vs/editor/editor.main.js',
-        ],
-      },
-    },
-  );
+  const markdown = await createMD(pageCtn.getMainPanel(), content);
+  markdown.setContent('# content changed');
 
-  // console.log(markdown);
+  const postList = new PostList(
+    pageCtn.getSideBar(),
+    [
+      { id: 'fffeedc', title: 'Post title' },
+    ],
+  );
+  postList.load([
+    { id: 'xfderqd', title: 'Reset audio or video' },
+    { id: 'i234', title: 'Reset book test 134d' },
+  ]);
 })();

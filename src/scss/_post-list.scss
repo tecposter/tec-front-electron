@@ -1,0 +1,15 @@
+.post-item {
+  a {
+    color: get-color(on-background);
+    display: block;
+    border-left: 5px solid transparent;
+    border-bottom: 1px solid get-color(on-surface);
+    padding: .5rem .7rem;
+
+    &.selected {
+      border-left-color: get-color(primary);
+      background: get-color(light-primary);
+      color: get-color(on-primary);
+    }
+  }
+}
