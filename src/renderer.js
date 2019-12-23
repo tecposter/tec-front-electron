@@ -49,6 +49,7 @@ import { asCreateMarkdown } from 'markdown';
 import { oneElem } from 'gap/web';
 import PageCtn from 'PageCtn';
 import PostList from 'PostList';
+import WSClient from 'WSClient';
 
 /*
 const pageElem = oneElem('.page');
@@ -107,4 +108,14 @@ const createMD = (ctn, content) => asCreateMarkdown(
     { id: 'xfderqd', title: 'Reset audio or video' },
     { id: 'i234', title: 'Reset book test 134d' },
   ]);
+
+  const wsClient = new WSClient('ws://127.0.0.1/ws');
+
+  wsClient.receive('post.fetch', data => {
+    console.log(data);
+  });
+
+  postList.onSelect(id => {
+    wsClient.send('post.fetch', { id });
+  });
 })();
