@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { app, BrowserWindow } from 'electron';
+import WebSocket from 'ws';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -53,6 +54,24 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+/*
+const wsClient = new WSClient('ws://localhost:7890/ws');
+wsClient.receive('post.fetch', data => {
+  console.log(data);
+});
+
+wsClient.connect();
+wsClient.send('post.fetch', { id });
+*/
+const ws = new WebSocket('ws://localhost:7890/ws');
+ws.on('open', () => {
+  ws.send('{"cmd": "draft.list"}');
+});
+
+ws.on('message', (data) => {
+  console.log(data);
 });
 
 // In this file you can include the rest of your app's specific main process

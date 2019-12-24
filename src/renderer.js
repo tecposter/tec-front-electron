@@ -45,11 +45,10 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 
 // console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
-import { asCreateMarkdown } from 'markdown';
-import { oneElem } from 'gap/web';
-import PageCtn from 'PageCtn';
-import PostList from 'PostList';
-import WSClient from 'WSClient';
+import { asCreateMarkdown } from './js/markdown';
+import { oneElem } from './js/gap/web';
+import PageCtn from './js/PageCtn';
+import PostList from './js/PostList';
 
 /*
 const pageElem = oneElem('.page');
@@ -108,14 +107,4 @@ const createMD = (ctn, content) => asCreateMarkdown(
     { id: 'xfderqd', title: 'Reset audio or video' },
     { id: 'i234', title: 'Reset book test 134d' },
   ]);
-
-  const wsClient = new WSClient('ws://127.0.0.1/ws');
-
-  wsClient.receive('post.fetch', data => {
-    console.log(data);
-  });
-
-  postList.onSelect(id => {
-    wsClient.send('post.fetch', { id });
-  });
 })();

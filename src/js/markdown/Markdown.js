@@ -1,5 +1,5 @@
-import { oneElem, createElem } from 'gap/web';
-import GapEvent from 'gap/GapEvent';
+import { oneElem, createElem } from '../gap/web';
+import GapEvent from '../gap/GapEvent';
 import Coder from './Coder';
 import Parser from './Parser';
 

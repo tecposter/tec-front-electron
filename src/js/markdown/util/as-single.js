@@ -1,4 +1,4 @@
-import GapEvent from 'gap/GapEvent';
+import GapEvent from '../../gap/GapEvent';
 
 const container = {};
 const pending = {};
