@@ -45,10 +45,10 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 
 // console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
-import { asCreateMarkdown } from './js-renderer/markdown';
-import { oneElem } from './js-renderer/gap/web';
-import PageCtn from './js-renderer/PageCtn';
-import PostList from './js-renderer/PostList';
+import { asCreateMarkdown } from './js/markdown';
+import { oneElem } from './js/gap/web';
+import PageCtn from './js/PageCtn';
+import PostList from './js/PostList';
 
 /*
 const pageElem = oneElem('.page');
