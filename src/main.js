@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { WSConnector } from './js/connector';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -15,6 +16,9 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   // and load the index.html of the app.
@@ -23,6 +27,17 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  const wsAddr = 'ws://192.168.56.7:7890/ws';
+  const wsConnector = new WSConnector(wsAddr, ipcMain, mainWindow.webContents);
+  wsConnector.connect();
+  /*
+  mainWindow.webContents.on('did-finish-load', () => {
+    const wsAddr = 'ws://192.168.56.7:7890/ws';
+    const wsConnector = new WSConnector(wsAddr, ipcMain, mainWindow.webContents);
+    wsConnector.connect();
+  });
+  */
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

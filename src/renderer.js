@@ -45,15 +45,31 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 
 // console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
+
 import { asCreateMarkdown } from './js/markdown';
 import { oneElem } from './js/gap/web';
 import PageCtn from './js/PageCtn';
 import PostList from './js/PostList';
+import { IPCConnector } from './js/connector';
 
 /*
 const pageElem = oneElem('.page');
 const ctnElem = createElem('div');
 pageElem.appendChild(ctnElem);
+*/
+
+const { ipcRenderer } = window.nodeRequire('electron');
+/*
+ * https://electronjs.org/docs/faq#i-can-not-use-jqueryrequirejsmeteorangularjs-in-electron
+ * <head>
+<script>
+window.nodeRequire = require;
+delete window.require;
+delete window.exports;
+delete window.module;
+</script>
+<script type="text/javascript" src="jquery.js"></script>
+</head>
 */
 
 const createMD = (ctn, content) => asCreateMarkdown(
@@ -107,4 +123,14 @@ const createMD = (ctn, content) => asCreateMarkdown(
     { id: 'xfderqd', title: 'Reset audio or video' },
     { id: 'i234', title: 'Reset book test 134d' },
   ]);
+
+  const ipcConnector = new IPCConnector(ipcRenderer);
+
+  ipcConnector.onReceive('draft.list', (data) => {
+    console.log(data);
+  });
+  ipcConnector.connect();
+
+  postList.onSelect(() => ipcConnector.send('draft.list'));
+  ipcConnector.send('draft.list');
 })();

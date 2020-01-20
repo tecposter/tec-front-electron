@@ -28,7 +28,6 @@ export default class PostList {
     }
     target.addClass('selected');
     preSelected = target;
-    // console.log(id);
     this.event.trigger('select', id);
   }
 
