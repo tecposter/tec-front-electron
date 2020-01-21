@@ -51,6 +51,7 @@ import { oneElem } from './js/gap/web';
 import PageCtn from './js/PageCtn';
 import PostList from './js/PostList';
 import { IPCConnector } from './js/connector';
+import config from './config';
 
 /*
 const pageElem = oneElem('.page');
@@ -75,35 +76,7 @@ delete window.module;
 const createMD = (ctn, content) => asCreateMarkdown(
   ctn,
   content,
-  {
-    hljsRes: {
-      csses: ['/hljs/styles/default.css'],
-      jses: [
-        '/hljs/highlight.pack.js',
-      ],
-    },
-    katexRes: {
-      csses: ['/katex/katex.min.css'],
-      jses: ['/katex/katex.min.js'],
-    },
-    markdownitRes: {
-      jses: ['/mdit/markdown-it.min.js'],
-    },
-    monacoRes: {
-      path: '/monaco/min/vs',
-      csses: [
-        [
-          '/monaco/min/vs/editor/editor.main.css',
-          { 'data-name': 'vs/editor/editor.main' },
-        ],
-      ],
-      jses: [
-        '/monaco/min/vs/loader.js',
-        '/monaco/min/vs/editor/editor.main.nls.js',
-        '/monaco/min/vs/editor/editor.main.js',
-      ],
-    },
-  },
+  config.markdown,
 );
 
 (async () => {
