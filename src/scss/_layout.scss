@@ -23,6 +23,16 @@ body,
     border-right: 1px solid get-color(dark-gray);
     flex-shrink: 0;
     width: 210px;
+
+    .operation {
+      border-bottom: 1px solid get-color(dark-gray);
+      padding: .5rem;
+    }
+
+    .btn {
+      font-weight: bold;
+      line-height: 0;
+    }
   }
 
   .main-board {

@@ -82,12 +82,11 @@ const createMD = (ctn, content) => asCreateMarkdown(
 (async () => {
   const pageCtn = new PageCtn(oneElem('.page'));
   const content = '# Article Title';
-  // const markdown = await asMarkdown(pageCtn.getMainPanel(), content);
   const markdown = await createMD(pageCtn.getMainPanel(), content);
-  markdown.setContent('# content changed');
+  // markdown.setContent('# content changed');
 
   const postList = new PostList(
-    pageCtn.getSideBar(),
+    pageCtn.getSidePanel(),
     [
       { id: 'fffeedc', title: 'Post title' },
     ],
@@ -103,6 +102,8 @@ const createMD = (ctn, content) => asCreateMarkdown(
     console.log(data);
   });
   ipcConnector.connect();
+
+  pageCtn.onNewPost(() => console.log('new post'));
 
   postList.onSelect(() => ipcConnector.send('draft.list'));
   ipcConnector.send('draft.list');
