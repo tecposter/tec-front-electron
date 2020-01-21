@@ -32,10 +32,14 @@ export default class PostList {
   }
 
   load(posts) {
+    if (!posts || !Array.isArray(posts)) {
+      return;
+    }
+
     this.ctn.html`${posts.map((post) => `
       <div class="post-item">
         <a href="#/post/${post.id}" data-id="${post.id}">
-          ${post.title}
+          ${post.title || 'untitled'}
         </a>
       </div>
     `)}`;

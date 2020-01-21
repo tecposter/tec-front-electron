@@ -83,28 +83,39 @@ const createMD = (ctn, content) => asCreateMarkdown(
   const pageCtn = new PageCtn(oneElem('.page'));
   const content = '# Article Title';
   const markdown = await createMD(pageCtn.getMainPanel(), content);
-  // markdown.setContent('# content changed');
+  markdown.setContent('# TecPoster Markdown Editor');
+  markdown.viewMode();
 
   const postList = new PostList(
     pageCtn.getSidePanel(),
-    [
-      { id: 'fffeedc', title: 'Post title' },
-    ],
   );
+  /*
   postList.load([
     { id: 'xfderqd', title: 'Reset audio or video' },
     { id: 'i234', title: 'Reset book test 134d' },
   ]);
+  */
 
   const ipcConnector = new IPCConnector(ipcRenderer);
-
   ipcConnector.onReceive('draft.list', (data) => {
     console.log(data);
   });
+  ipcConnector.onReceive('post.list', (data) => {
+    if (data && data.posts) {
+      postList.load(data.posts);
+    }
+    ipcConnector.send('draft.list');
+  });
+  ipcConnector.onReceive('post.fetch', (data) => {
+    if (data && data.post) {
+      markdown.setContent(data.post.content);
+    }
+  });
+
   ipcConnector.connect();
+  ipcConnector.send('post.list');
 
   pageCtn.onNewPost(() => console.log('new post'));
 
-  postList.onSelect(() => ipcConnector.send('draft.list'));
-  ipcConnector.send('draft.list');
+  postList.onSelect((postID) => ipcConnector.send('post.fetch', { postID }));
 })();

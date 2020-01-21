@@ -23,8 +23,13 @@ export default class PageCtn {
 
     this.sideBar = this.ctn.oneElem('.side-bar');
     this.sidePanel = this.sideBar.oneElem('.side-panel');
+
     this.mainBoard = this.ctn.oneElem('.main-board');
     this.mainPanel = this.mainBoard.oneElem('.main-panel');
+    /*
+    this.editPanel = this.mainBoard.oneElem('.edit-panel');
+    this.viewPanel = this.mainBoard.oneElem('.view-panel');
+    */
 
     this.sideBar.oneElem('.new-post button').on('click', (evt) => this.triggerNewPost(evt));
     this.sideBar.oneElem('.new-post a').on('click', (evt) => this.triggerNewPost(evt));
@@ -38,15 +43,34 @@ export default class PageCtn {
     this.event.on('new-post', fun);
   }
 
-  getSidePanel() {
-    return this.sidePanel;
-  }
-
   getMainBoard() {
     return this.mainBoard;
+  }
+
+  getSidePanel() {
+    return this.sidePanel;
   }
 
   getMainPanel() {
     return this.mainPanel;
   }
+  /*
+  getEditPanel() {
+    return this.editPanel;
+  }
+
+  getViewPanel() {
+    return this.viewPanel;
+  }
+
+  edit() {
+    this.viewPanel.hide();
+    this.editPanel.show();
+  }
+
+  view() {
+    this.editPanel.hide();
+    this.viewPanel.show();
+  }
+  */
 }

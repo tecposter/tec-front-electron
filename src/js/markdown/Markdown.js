@@ -3,6 +3,12 @@ import GapEvent from '../gap/GapEvent';
 import Coder from './Coder';
 import Parser from './Parser';
 
+const MODE = {
+  EDIT: 'edit',
+  VIEW: 'view',
+  PREVIEW: 'preview',
+};
+
 const buildCtn = (ctn) => {
   const styleElem = createElem('style');
   styleElem.setAttribute('type', 'text/css');
@@ -56,15 +62,20 @@ export default class Markdown {
     );
     this.parser = new Parser(hljs, katex, markdownit);
 
-    this.preview(content);
+    this.setPreview(content);
     this.register();
+
+    /*
+    this.mode = MODE.PREVIEW;
     this.adjustLayout();
+    */
+    this.previewMode();
     window.on('resize', () => this.adjustLayout());
   }
 
   register() {
     this.coder.onChange(() => {
-      this.preview(this.coder.getContent());
+      this.setPreview(this.coder.getContent());
     });
 
     this.coder.onScroll((evt) => {
@@ -88,13 +99,36 @@ export default class Markdown {
     this.coder.setContent(content);
   }
 
-  preview(content) {
+  setPreview(content) {
     this.previewElem.innerHTML = this.parser.toHTML(content);
   }
 
   adjustLayout() {
-    const colWidth = this.ctnElem.offsetWidth / 2;
-    this.coderWrap.style.width = `${colWidth}px`;
-    this.previewWrap.style.width = `${colWidth}px`;
+    if (this.mode === MODE.PREVIEW) {
+      const colWidth = this.ctnElem.offsetWidth / 2;
+      this.coderWrap.style.width = `${colWidth}px`;
+      this.previewWrap.style.width = `${colWidth}px`;
+    }
+  }
+
+  viewMode() {
+    this.mode = MODE.VIEW;
+    this.coderWrap.hide();
+    this.previewWrap.show();
+    this.previewWrap.style.width = '100%';
+  }
+
+  editMode() {
+    this.mode = MODE.EDIT;
+    this.previewWrap.hide();
+    this.coderWrap.show();
+    this.coderWrap.style.width = '100%';
+  }
+
+  previewMode() {
+    this.mode = MODE.PREVIEW;
+    this.previewWrap.show();
+    this.coderWrap.show();
+    this.adjustLayout();
   }
 }
