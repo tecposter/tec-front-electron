@@ -1,0 +1,21 @@
+.post-editor {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & > * {
+    flex: 1;
+  }
+
+  & > .status {
+    border-bottom: 1px solid get-color(dark-gray);
+    height: $top-bar-height;
+    line-height: $top-bar-height;
+    padding: 0 1rem;
+  }
+
+  & > .editor {
+    flex: 1 100%;
+  }
+}

@@ -1,4 +1,4 @@
 import Markdown from './Markdown';
-import asCreateMarkdown from './as-create-markdown';
+import asCreateMarkdown from './asCreateMarkdown';
 
 export { Markdown, asCreateMarkdown };

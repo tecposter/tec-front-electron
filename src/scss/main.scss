@@ -4,6 +4,8 @@
 @import './layout';
 @import './markdown-editor';
 @import './post-list';
+@import './post-editor';
+@import './search-bar';
 
 @include gap-typography;
 @include gap-color;

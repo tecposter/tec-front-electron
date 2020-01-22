@@ -4,7 +4,7 @@ import asHLJS from './third/as-hljs';
 import asKatex from './third/as-katex';
 import Markdown from './Markdown';
 
-export default async (ctn, content, reses) => {
+export default async (reses) => {
   const {
     hljsRes,
     katexRes,
@@ -19,8 +19,6 @@ export default async (ctn, content, reses) => {
   ]);
 
   return new Markdown(
-    ctn,
-    content,
     {
       hljs,
       katex,

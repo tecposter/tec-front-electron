@@ -9,7 +9,8 @@ const MODE = {
   PREVIEW: 'preview',
 };
 
-const buildCtn = (ctn) => {
+const buildCtn = () => {
+  const ctn = createElem('div');
   const styleElem = createElem('style');
   styleElem.setAttribute('type', 'text/css');
   styleElem.innerHTML = `
@@ -37,7 +38,7 @@ const buildCtn = (ctn) => {
 const DefaultContent = '# TecPoster Markdown Title\n';
 
 export default class Markdown {
-  constructor(ctnElem, inContent, tools) {
+  constructor(tools) {
     const {
       hljs,
       katex,
@@ -47,13 +48,13 @@ export default class Markdown {
 
     this.event = new GapEvent();
 
-    this.ctnElem = buildCtn(ctnElem);
+    this.ctnElem = buildCtn();
     this.previewElem = this.ctnElem.oneElem('.preview');
     this.previewWrap = this.previewElem.parentElement;
     this.coderElem = this.ctnElem.oneElem('.coder');
     this.coderWrap = this.coderElem.parentElement;
 
-    const content = inContent || DefaultContent;
+    const content = DefaultContent;
 
     this.coder = new Coder(
       monaco,
@@ -71,6 +72,12 @@ export default class Markdown {
     */
     this.previewMode();
     window.on('resize', () => this.adjustLayout());
+  }
+
+  appendTo(node) {
+    if (node instanceof Node) {
+      node.appendChild(this.ctnElem);
+    }
   }
 
   register() {

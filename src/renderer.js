@@ -47,11 +47,17 @@ monaco.editor.create(document.getElementById('editor-coder'), {
 
 
 import { asCreateMarkdown } from './js/markdown';
-import { oneElem } from './js/gap/web';
-import PageCtn from './js/PageCtn';
-import PostList from './js/PostList';
+// import { oneElem } from './js/gap/web';
+// import PageCtn from './js/PageCtn';
+// import PostList from './js/PostList';
 import { IPCConnector } from './js/connector';
 import config from './config';
+import {
+  PageCtn,
+  SearchBar,
+  PostList,
+  PostEditor,
+} from './js/component';
 
 /*
 const pageElem = oneElem('.page');
@@ -73,13 +79,41 @@ delete window.module;
 </head>
 */
 
+/*
 const createMD = (ctn, content) => asCreateMarkdown(
   ctn,
   content,
   config.markdown,
 );
+*/
 
 (async () => {
+  const pageCtn = new PageCtn();
+  const searchBar = new SearchBar();
+  const postList = new PostList();
+
+  const markdown = await asCreateMarkdown(config.markdown);
+  const postEditor = new PostEditor(markdown);
+
+  pageCtn.appendTo(window.document.body);
+  searchBar.appendTo(pageCtn.getSideBar());
+  postList.appendTo(pageCtn.getSideBar());
+  postEditor.appendTo(pageCtn.getMainPanel());
+
+  const ipcConnector = new IPCConnector(ipcRenderer);
+  ipcConnector.onReceive('post.list', ({ posts }) => {
+    postList.load(posts);
+  });
+  ipcConnector.onReceive('post.fetch', ({ post }) => {
+    postEditor.setPost(post);
+  });
+
+  ipcConnector.connect();
+  ipcConnector.send('post.list');
+
+  postList.onSelect((post) => ipcConnector.send('post.fetch', { postID: post.id }));
+
+  /*
   const pageCtn = new PageCtn(oneElem('.page'));
   const content = '# Article Title';
   const markdown = await createMD(pageCtn.getMainPanel(), content);
@@ -89,12 +123,6 @@ const createMD = (ctn, content) => asCreateMarkdown(
   const postList = new PostList(
     pageCtn.getSidePanel(),
   );
-  /*
-  postList.load([
-    { id: 'xfderqd', title: 'Reset audio or video' },
-    { id: 'i234', title: 'Reset book test 134d' },
-  ]);
-  */
 
   const ipcConnector = new IPCConnector(ipcRenderer);
   ipcConnector.onReceive('draft.list', (data) => {
@@ -107,6 +135,7 @@ const createMD = (ctn, content) => asCreateMarkdown(
     ipcConnector.send('draft.list');
   });
   ipcConnector.onReceive('post.fetch', (data) => {
+    console.log(data);
     if (data && data.post) {
       markdown.setContent(data.post.content);
     }
@@ -118,4 +147,5 @@ const createMD = (ctn, content) => asCreateMarkdown(
   pageCtn.onNewPost(() => console.log('new post'));
 
   postList.onSelect((postID) => ipcConnector.send('post.fetch', { postID }));
+  */
 })();
