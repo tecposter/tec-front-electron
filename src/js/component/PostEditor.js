@@ -5,14 +5,10 @@ export default class PostEditor extends Base {
     super('div', 'post-editor');
 
     this.ctn.html`
-    <div class="status">
-      status
-    </div>
     <div class="editor">
     </div>
     `;
 
-    this.statusElem = this.ctn.oneElem('.status');
     this.editorElem = this.ctn.oneElem('.editor');
 
     this.markdown = markdown;
