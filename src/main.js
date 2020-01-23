@@ -1,7 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { WSConnector } from './js/connector';
-import config from './config';
+// import { WSConnector } from './js/connector';
+import config from './js/config';
+import createMenu from './js/menu/createMenu';
+import ctrl from './js/ctrl';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -11,6 +13,12 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+
+/*
+const wsConnector = new WSConnector(config.ws.addr, ipcMain);
+wsConnector.connect();
+*/
+ctrl.connectWS(ipcMain, config.ws.addr);
 
 const createWindow = () => {
   // Create the browser window.
@@ -30,8 +38,9 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 
   // const wsAddr = 'ws://192.168.56.7:7890/ws';
-  const wsConnector = new WSConnector(config.ws.addr, ipcMain, mainWindow.webContents);
-  wsConnector.connect();
+  // const wsConnector = new WSConnector(config.ws.addr, ipcMain, mainWindow.webContents);
+  ctrl.setDefaultWebContents(mainWindow.webContents);
+  // wsConnector.addWebContents(mainWindow.webContents);
   /*
   mainWindow.webContents.on('did-finish-load', () => {
     const wsAddr = 'ws://192.168.56.7:7890/ws';
@@ -52,6 +61,8 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+createMenu();
+
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.

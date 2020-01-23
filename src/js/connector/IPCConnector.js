@@ -1,11 +1,6 @@
 import GapEvent from '../gap/GapEvent';
 import WS_MESSAGE from './common';
-
-const assertCMD = (cmd) => {
-  if (!cmd) {
-    throw new Error('Incorrect CMD Format');
-  }
-};
+import assertCMD from './assertCMD';
 
 export default class IPCConnector {
   constructor(ipcRenderer) {

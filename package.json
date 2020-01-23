@@ -1,6 +1,6 @@
 {
   "name": "tec-front-electron",
-  "productName": "tec-front-electron",
+  "productName": "TecPoster",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",

@@ -50,14 +50,15 @@ import { asCreateMarkdown } from './js/markdown';
 // import { oneElem } from './js/gap/web';
 // import PageCtn from './js/PageCtn';
 // import PostList from './js/PostList';
-import { IPCConnector } from './js/connector';
-import config from './config';
+// import { IPCConnector } from './js/connector';
+import config from './js/config';
 import {
   PageCtn,
   SearchBar,
   PostList,
   PostEditor,
 } from './js/component';
+import ctrl from './js/ctrl';
 
 /*
 const pageElem = oneElem('.page');
@@ -66,6 +67,8 @@ pageElem.appendChild(ctnElem);
 */
 
 const { ipcRenderer } = window.nodeRequire('electron');
+// const { Menu, MenuItem } = remote;
+
 /*
  * https://electronjs.org/docs/faq#i-can-not-use-jqueryrequirejsmeteorangularjs-in-electron
  * <head>
@@ -100,19 +103,43 @@ const createMD = (ctn, content) => asCreateMarkdown(
   postList.appendTo(pageCtn.getSideBar());
   postEditor.appendTo(pageCtn.getMainPanel());
 
+  ctrl.regDefaultRendererCtrl(ipcRenderer, postList, postEditor);
+  /*
   const ipcConnector = new IPCConnector(ipcRenderer);
   ipcConnector.onReceive('post.list', ({ posts }) => {
     postList.load(posts);
   });
   ipcConnector.onReceive('post.fetch', ({ post }) => {
-    postEditor.setPost(post);
+    postEditor.view(post);
+  });
+  ipcConnector.onReceive('post.create', ({ post }) => {
+    postList.add(post);
   });
 
   ipcConnector.connect();
   ipcConnector.send('post.list');
 
-  postList.onSelect((post) => ipcConnector.send('post.fetch', { postID: post.id }));
+  postList.onSelect((post, selectType) => {
+    if (selectType === PostList.ACTION.VIEW) {
+      ipcConnector.send('post.fetch', { postID: post.id });
+    }
+  });
+  */
 
+  /*
+  const menu = new Menu();
+  menu.append(new MenuItem({
+    label: 'MenuItem1',
+    click() { console.log('item 1 clicked'); },
+  }));
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({ label: 'MenuItem2', type: 'checkbox', checked: true }));
+
+  window.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    menu.popup({ window: remote.getCurrentWindow() });
+  }, false);
+  */
   /*
   const pageCtn = new PageCtn(oneElem('.page'));
   const content = '# Article Title';

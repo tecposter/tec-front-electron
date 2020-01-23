@@ -1,11 +1,24 @@
 import Base from './Base';
 import GapEvent from '../gap/GapEvent';
+import { createElem } from '../gap/web';
 
 const EVENT = {
   SELECT: 'select',
 };
 
-let preSelected;
+const SELECT_TYPE = {
+  VIEW: 'view',
+  PREVIEW: 'preview',
+  EDIT: 'edit',
+};
+
+const createPostInnerHTML = (post) => `
+  <a href="javascript:;" data-id="${post.id}">
+    ${post.title || 'untitiled'}
+  </a>
+`;
+
+let selected;
 
 export default class PostList extends Base {
   constructor() {
@@ -14,14 +27,14 @@ export default class PostList extends Base {
     this.event = new GapEvent();
     this.posts = {};
 
-    this.ctn.on('click', (evt) => this.selectPost(evt));
+    this.ctn.on('click', (evt) => this.handleClick(evt));
   }
 
   onSelect(fun) {
     this.event.on(EVENT.SELECT, fun);
   }
 
-  selectPost(evt) {
+  handleClick(evt) {
     const { target } = evt;
     if (target.tagName.toLowerCase() !== 'a') {
       return;
@@ -32,12 +45,19 @@ export default class PostList extends Base {
       throw new Error(`cannot find post id ${id}`);
     }
     this.event.trigger(EVENT.SELECT, post);
+  }
 
-    if (preSelected) {
-      preSelected.removeClass('selected');
+  select(post) {
+    const { id } = post;
+    const target = this.ctn.oneElem(`#post-${id}`);
+    if (!target) {
+      return;
+    }
+    if (selected) {
+      selected.removeClass('selected');
     }
     target.addClass('selected');
-    preSelected = target;
+    selected = target;
   }
 
   load(postArr) {
@@ -49,12 +69,21 @@ export default class PostList extends Base {
     this.ctn.html`${postArr.map((post) => {
       this.posts[post.id] = post;
       return `
-      <div class="post-item">
-        <a href="javascript:;" data-id="${post.id}">
-          ${post.title || 'untitiled'}
-        </a>
+      <div class="post-item" id="post-${post.id}">
+        ${createPostInnerHTML(post)}
       </div>
       `;
     })}`;
+  }
+
+  add(post) {
+    const postElem = createElem('div');
+    postElem.id = `post-${post.id}`;
+    postElem.addClass('post-item');
+    postElem.innerHTML = createPostInnerHTML(post);
+    this.ctn.prepend(postElem);
+    this.select(post);
+    this.posts[post.id] = post;
+    // this.selectPostByElem(postElem, SELECT_TYPE.PREVIEW);
   }
 }

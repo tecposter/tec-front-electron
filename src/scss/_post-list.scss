@@ -1,14 +1,16 @@
 .post-item {
   a {
+    border-bottom: 1px solid get-color(on-surface);
+    border-left: 5px solid transparent;
     color: get-color(on-background);
     display: block;
-    border-left: 5px solid transparent;
-    border-bottom: 1px solid get-color(on-surface);
     padding: .5rem .7rem;
+  }
 
-    &.selected {
-      border-left-color: get-color(primary);
+  &.selected {
+    a {
       background: get-color(light-primary);
+      border-left-color: get-color(primary);
       color: get-color(on-primary);
     }
   }

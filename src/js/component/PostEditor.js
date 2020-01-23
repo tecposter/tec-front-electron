@@ -21,6 +21,16 @@ export default class PostEditor extends Base {
     this.markdown.setContent(post.content);
   }
 
+  view(post) {
+    this.setPost(post);
+    this.markdown.viewMode();
+  }
+
+  preview(post) {
+    this.setPost(post);
+    this.markdown.previewMode();
+  }
+
   appendTo(node) {
     super.appendTo(node);
     this.markdown.adjustLayout();
