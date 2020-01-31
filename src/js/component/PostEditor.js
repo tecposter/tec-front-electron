@@ -18,16 +18,21 @@ export default class PostEditor extends Base {
 
   setPost(post) {
     this.post = post;
-    this.markdown.setContent(post.content);
   }
 
   view(post) {
     this.setPost(post);
+    this.markdown.setContent(post.content);
     this.markdown.viewMode();
   }
 
   preview(post) {
     this.setPost(post);
+    if (post.draft) {
+      this.markdown.setContent(post.draft);
+    } else {
+      this.markdown.setContent(post.content);
+    }
     this.markdown.previewMode();
   }
 

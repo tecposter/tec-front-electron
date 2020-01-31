@@ -2,8 +2,9 @@ import { Menu } from 'electron';
 import ctrl from '../ctrl';
 
 const isMac = process.platform === 'darwin';
+const mainCtrl = ctrl.getMainCtrl();
 
-const createMenu = (wsConnector) => {
+const createMenu = () => {
   const template = [
     ...(isMac ? [{
       label: 'TecPoster',
@@ -26,7 +27,12 @@ const createMenu = (wsConnector) => {
         {
           label: 'New Post',
           accelerator: 'CmdOrCtrl+N',
-          click: () => ctrl.triggerCreatePost(),
+          click: () => mainCtrl.triggerCreatePost(),
+        },
+        {
+          label: 'Edit Post',
+          accelerator: 'CmdOrCtrl+E',
+          click: () => mainCtrl.triggerEditPost(),
         },
       ],
     },

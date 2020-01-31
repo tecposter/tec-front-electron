@@ -18,7 +18,8 @@ let mainWindow;
 const wsConnector = new WSConnector(config.ws.addr, ipcMain);
 wsConnector.connect();
 */
-ctrl.connectWS(ipcMain, config.ws.addr);
+const mainCtrl = ctrl.getMainCtrl();
+mainCtrl.connectWS(ipcMain, config.ws.addr);
 
 const createWindow = () => {
   // Create the browser window.
@@ -39,7 +40,7 @@ const createWindow = () => {
 
   // const wsAddr = 'ws://192.168.56.7:7890/ws';
   // const wsConnector = new WSConnector(config.ws.addr, ipcMain, mainWindow.webContents);
-  ctrl.setDefaultWebContents(mainWindow.webContents);
+  mainCtrl.setDefaultWebContents(mainWindow.webContents);
   // wsConnector.addWebContents(mainWindow.webContents);
   /*
   mainWindow.webContents.on('did-finish-load', () => {

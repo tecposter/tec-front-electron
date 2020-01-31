@@ -1,6 +1,6 @@
 import GapEvent from '../gap/GapEvent';
 
-import { WS_MESSAGE } from './common';
+import { WS_MESSAGE, INTERNAL_MESSAGE } from './common';
 import assertCMD from './assertCMD';
 
 export default class DefaultRendererCtrl {
@@ -8,15 +8,17 @@ export default class DefaultRendererCtrl {
     this.ipcRenderer = ipcRenderer;
     this.postList = postList;
     this.postEditor = postEditor;
-    this.event = new GapEvent();
+    this.internalEvent = new GapEvent();
+    this.wsEvent = new GapEvent();
 
     this.currentPost = null;
 
     this.regIPCRenderer();
-    this.regReceiving();
+    this.regInternalReceiving();
+    this.regWSReceiving();
     this.regPostList();
 
-    this.send('post.list');
+    this.sendWS('post.list');
   }
 
   regIPCRenderer() {
@@ -24,46 +26,80 @@ export default class DefaultRendererCtrl {
     this.ipcRenderer.on(WS_MESSAGE, (event, arg) => {
       const res = JSON.parse(arg);
       if (res.status === 'ok') {
-        this.event.trigger(res.cmd, res.data);
+        this.wsEvent.trigger(res.cmd, res.data);
       } else if (res.status === 'error') {
         throw new Error(res.data.error);
       } else {
         throw new Error('unknown error');
       }
     });
+
+    this.ipcRenderer.removeAllListeners(INTERNAL_MESSAGE);
+    this.ipcRenderer.on(INTERNAL_MESSAGE, (_event, arg) => {
+      const { cmd, params } = arg;
+      this.internalEvent.trigger(cmd, params);
+    });
   }
 
-  onReceive(cmd, fun) {
+  onWSReceive(cmd, fun) {
     assertCMD(cmd);
-    this.event.on(cmd, fun);
+    this.wsEvent.on(cmd, fun);
     return this;
   }
 
-  send(cmd, params) {
+  onInternalReceive(cmd, fun) {
+    assertCMD(cmd);
+    this.internalEvent.on(cmd, fun);
+    return this;
+  }
+
+  sendWS(cmd, params) {
     assertCMD(cmd);
     this.ipcRenderer.send(WS_MESSAGE, JSON.stringify({ cmd, params }));
   }
 
-  regReceiving() {
-    this.onReceive('post.list', ({ posts }) => this.postList.load(posts));
-    this.onReceive('post.fetch', ({ post }) => {
+  regInternalReceiving() {
+    this.onInternalReceive('post.edit', () => {
+      const currentPost = this.getCurrentPost();
+      if (!currentPost) {
+        return;
+      }
+      this.sendWS('post.edit', { postID: currentPost.id });
+    });
+  }
+
+  regWSReceiving() {
+    this.onWSReceive('post.list', ({ posts }) => this.postList.load(posts));
+
+    this.onWSReceive('post.fetch', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.select(post);
       this.postEditor.view(post);
     });
-    this.onReceive('post.create', ({ post }) => {
+
+    this.onWSReceive('post.create', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.add(post);
+      this.postEditor.preview(post);
+    });
+
+    this.onWSReceive('post.edit', ({ post }) => {
+      this.setCurrentPost(post);
+      this.postList.select(post);
       this.postEditor.preview(post);
     });
   }
 
   regPostList() {
-    this.postList.onSelect((post) => this.send('post.fetch', { postID: post.id }));
+    this.postList.onSelect((post) => this.sendWS('post.fetch', { postID: post.id }));
   }
 
   setCurrentPost(post) {
     this.currentPost = post;
+  }
+
+  getCurrentPost() {
+    return this.currentPost;
   }
 }
 
