@@ -138,4 +138,8 @@ export default class Markdown {
     this.coderWrap.show();
     this.adjustLayout();
   }
+
+  onChange(fun) {
+    this.coder.onChange(fun);
+  }
 }

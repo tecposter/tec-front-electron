@@ -14,13 +14,19 @@ export default class PostEditor extends Base {
     this.markdown = markdown;
     this.markdown.appendTo(this.editorElem);
     this.markdown.viewMode();
+    this.isEditing = false;
   }
 
   setPost(post) {
     this.post = post;
   }
 
+  getPost() {
+    return this.post;
+  }
+
   view(post) {
+    this.isEditing = false; // must add at the front
     this.setPost(post);
     this.markdown.setContent(post.content);
     this.markdown.viewMode();
@@ -34,10 +40,23 @@ export default class PostEditor extends Base {
       this.markdown.setContent(post.content);
     }
     this.markdown.previewMode();
+    this.isEditing = true; // must add at the bottom
   }
 
   appendTo(node) {
     super.appendTo(node);
     this.markdown.adjustLayout();
+  }
+
+  onChange(fun) {
+    this.markdown.onChange((...args) => {
+      if (this.isEditing) {
+        fun(...args);
+      }
+    });
+  }
+
+  getContent() {
+    return this.markdown.getContent();
   }
 }

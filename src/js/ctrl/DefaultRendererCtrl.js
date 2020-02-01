@@ -2,6 +2,7 @@ import GapEvent from '../gap/GapEvent';
 
 import { WS_MESSAGE, INTERNAL_MESSAGE } from './common';
 import assertCMD from './assertCMD';
+import SavingStack from './util/SavingStack';
 
 export default class DefaultRendererCtrl {
   constructor(ipcRenderer, postList, postEditor) {
@@ -10,6 +11,7 @@ export default class DefaultRendererCtrl {
     this.postEditor = postEditor;
     this.internalEvent = new GapEvent();
     this.wsEvent = new GapEvent();
+    this.savingStack = new SavingStack();
 
     this.currentPost = null;
 
@@ -17,6 +19,8 @@ export default class DefaultRendererCtrl {
     this.regInternalReceiving();
     this.regWSReceiving();
     this.regPostList();
+    this.regSavingStack();
+    this.regPostEditor();
 
     this.sendWS('post.list');
   }
@@ -88,10 +92,26 @@ export default class DefaultRendererCtrl {
       this.postList.select(post);
       this.postEditor.preview(post);
     });
+
+    this.onWSReceive('draft.multiSave', () => {
+      this.savingStack.saved();
+    });
   }
 
   regPostList() {
     this.postList.onSelect((post) => this.sendWS('post.fetch', { postID: post.id }));
+  }
+
+  regSavingStack() {
+    this.savingStack.onSaving((drafts) => this.sendWS('draft.multiSave', { drafts }));
+  }
+
+  regPostEditor() {
+    this.postEditor.onChange(() => {
+      const post = this.postEditor.getPost();
+      this.savingStack.prepare(post.id, this.postEditor.getContent());
+      // this.sendWS('draft.save', { postID: post.id, content: this.postEditor.getContent() });
+    });
   }
 
   setCurrentPost(post) {
