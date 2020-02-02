@@ -70,6 +70,17 @@ export default class DefaultRendererCtrl {
       }
       this.sendWS('post.edit', { postID: currentPost.id });
     });
+
+    this.onInternalReceive('post.commit', () => {
+      const currentPost = this.getCurrentPost();
+      if (!currentPost) {
+        return;
+      }
+      const { id: postID } = currentPost;
+      const contentType = 'md';
+      const content = this.postEditor.getContent();
+      this.sendWS('post.commit', { postID, content, contentType });
+    });
   }
 
   regWSReceiving() {
@@ -91,6 +102,12 @@ export default class DefaultRendererCtrl {
       this.setCurrentPost(post);
       this.postList.select(post);
       this.postEditor.preview(post);
+    });
+
+    this.onWSReceive('post.commit', ({ post }) => {
+      this.setCurrentPost(post);
+      this.postList.select(post);
+      this.postEditor.view(post);
     });
 
     this.onWSReceive('draft.multiSave', () => {

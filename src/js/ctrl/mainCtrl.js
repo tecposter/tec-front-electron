@@ -32,6 +32,8 @@ const mainCtrl = {
   triggerCreatePost: () => mainCtrl.sendWS('post.create'),
 
   triggerEditPost: () => mainCtrl.sendInternal('post.edit'),
+
+  triggerCommitPost: () => mainCtrl.sendInternal('post.commit'),
 };
 
 export default mainCtrl;

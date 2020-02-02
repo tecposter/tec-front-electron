@@ -6,11 +6,13 @@ const EVENT = {
   SELECT: 'select',
 };
 
+/*
 const SELECT_TYPE = {
   VIEW: 'view',
   PREVIEW: 'preview',
   EDIT: 'edit',
 };
+*/
 
 const createPostInnerHTML = (post) => `
   <a href="javascript:;" data-id="${post.id}">
@@ -57,6 +59,7 @@ export default class PostList extends Base {
       selected.removeClass('selected');
     }
     target.addClass('selected');
+    target.innerHTML = createPostInnerHTML(post);
     selected = target;
   }
 

@@ -35,6 +35,14 @@ const buildCtn = () => {
   return ctn;
 };
 
+const extractTitle = (content) => {
+  const matched = /# ([^\n]+)/.exec(content);
+  if (matched) {
+    return matched[1];
+  }
+  return '';
+};
+
 const DefaultContent = '# TecPoster Markdown Title\n';
 
 export default class Markdown {
@@ -96,6 +104,10 @@ export default class Markdown {
       const totalHeight = this.previewWrap.scrollHeight - this.previewWrap.offsetHeight;
       this.previewWrap.scrollTop = (totalHeight * visible.startLineNumber) / max;
     });
+  }
+
+  getTitle() {
+    return extractTitle(this.getContent());
   }
 
   getContent() {

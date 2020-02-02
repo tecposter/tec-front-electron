@@ -34,6 +34,11 @@ const createMenu = () => {
           accelerator: 'CmdOrCtrl+E',
           click: () => mainCtrl.triggerEditPost(),
         },
+        {
+          label: 'Commit Post',
+          accelerator: 'CmdOrCtrl+M',
+          click: () => mainCtrl.triggerCommitPost(),
+        },
       ],
     },
 
