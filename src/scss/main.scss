@@ -1,7 +1,7 @@
 @import './setting';
 
 @import './gap';
-@import './layout';
+@import './multi-col';
 @import './markdown-editor';
 @import './post-list';
 @import './post-editor';
@@ -23,6 +23,13 @@ $palette-item-margin: .3rem;
 $diff-top-height: 3rem;
 $diff-top-item-margin: 0 1rem;
 
+html,
+body,
+.page {
+  height: 100%;
+  overflow: hidden;
+}
+
 a {
   color: get-color(primary);
   cursor: pointer;
@@ -37,6 +44,10 @@ img {
 pre {
   font-size: .85rem;
   line-height: 1.3;
+}
+
+.main-panel {
+  height: 100%;
 }
 
 .diff {

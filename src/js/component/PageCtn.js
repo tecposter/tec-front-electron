@@ -1,19 +1,14 @@
-import Base from './Base';
+import MultiCol from './MultiCol';
 
-export default class PageCtn extends Base {
+export default class PageCtn extends MultiCol {
   constructor() {
-    super('div', 'page-ctn');
+    super(1, 1);
 
-    this.ctn.html`
-      <div class="side-bar column">
-      </div>
-      <div class="main-board column">
-        <div class="main-panel"></div>
-      </div>
-    `;
 
-    this.sideBar = this.ctn.oneElem('.side-bar');
-    this.mainBoard = this.ctn.oneElem('.main-board');
+    this.sideBar = this.getCol(0);
+    this.mainBoard = this.getCol(1);
+
+    this.mainBoard.html`<div class="main-panel"></div>`;
     this.mainPanel = this.mainBoard.oneElem('.main-panel');
   }
 

@@ -1,0 +1,31 @@
+$multi-col-drag-width: 4.2px;
+$multi-col-drag-color: get-color(dark-gray);
+
+.multi-col {
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+
+  .col {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    height: 100%;
+    position: relative;
+
+    &.resize {
+      flex: 0 0 auto;
+      padding-right: $multi-col-drag-width;
+    }
+
+    .drag {
+      background: $multi-col-drag-color;
+      cursor: ew-resize;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: $multi-col-drag-width;
+    }
+  }
+}
+
