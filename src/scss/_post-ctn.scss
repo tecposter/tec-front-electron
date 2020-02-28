@@ -1,0 +1,14 @@
+.post-ctn {
+  .head {
+    background: get-color(light-gray);
+    border-bottom: 1px solid get-color(dark-gray);
+    padding: .5rem;
+  }
+
+  .toggle {
+    background: get-color(primary);
+    border-radius: 1rem;
+    color: get-color(on-primary);
+    padding: .3rem 1rem;
+  }
+}
