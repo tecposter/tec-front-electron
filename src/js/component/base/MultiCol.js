@@ -1,4 +1,4 @@
-import { createElem } from '../gap/web';
+import { createElem } from '../../gap/web';
 import Base from './Base';
 
 const minColWidth = 100;
@@ -63,8 +63,8 @@ document.addEventListener('dragover', (evt) => {
 }, false);
 
 export default class MultiCol extends Base {
-  constructor(resizeColCount = 1, flexColCount = 1) {
-    super('div', 'multi-col');
+  constructor(resizeColCount = 1, flexColCount = 1, extraClass = '') {
+    super('div', extraClass ? `multi-col ${extraClass}` : 'multi-col');
     const resizeCols = [];
     const flexCols = [];
 
@@ -78,7 +78,12 @@ export default class MultiCol extends Base {
 
     this.ctn.html`${resizeCols}${flexCols}`;
 
+    this.initCols();
     regMultiCol(this.ctn);
+  }
+
+  initCols() {
+    this.getCol(0).html``;
   }
 
   getCol(index) {

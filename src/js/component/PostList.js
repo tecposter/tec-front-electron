@@ -1,4 +1,4 @@
-import Base from './Base';
+import { Base } from './base';
 import GapEvent from '../gap/GapEvent';
 import { createElem } from '../gap/web';
 

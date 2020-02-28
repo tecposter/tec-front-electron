@@ -1,8 +1,8 @@
-import MultiCol from './MultiCol';
+import { MultiCol } from './base';
 
 export default class PageCtn extends MultiCol {
   constructor() {
-    super(1, 1);
+    super(1, 1, 'page-ctn');
 
 
     this.sideBar = this.getCol(0);

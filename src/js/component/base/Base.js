@@ -1,4 +1,4 @@
-import { createElem } from '../gap/web';
+import { createElem } from '../../gap/web';
 
 export default class Base {
   constructor(tagName, classNames) {

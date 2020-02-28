@@ -57,6 +57,7 @@ import {
   SearchBar,
   PostList,
   PostEditor,
+  PostCtn,
 } from './js/component';
 import ctrl from './js/ctrl';
 
@@ -97,11 +98,13 @@ const createMD = (ctn, content) => asCreateMarkdown(
 
   const markdown = await asCreateMarkdown(config.markdown);
   const postEditor = new PostEditor(markdown);
+  const postCtn = new PostCtn();
 
   pageCtn.appendTo(window.document.body);
   searchBar.appendTo(pageCtn.getSideBar());
   postList.appendTo(pageCtn.getSideBar());
-  postEditor.appendTo(pageCtn.getMainPanel());
+  // postEditor.appendTo(pageCtn.getMainPanel());
+  postCtn.appendTo(pageCtn.getMainPanel());
 
   ctrl.regDefaultRendererCtrl(ipcRenderer, postList, postEditor);
   /*
