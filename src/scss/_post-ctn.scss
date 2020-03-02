@@ -1,6 +1,10 @@
 .post-ctn {
+  .side-bar {
+    width: 249px;
+  }
+
   .head {
-    background: get-color(light-gray);
+    // background: get-color(light-gray);
     border-bottom: 1px solid get-color(dark-gray);
     padding: .5rem;
   }
@@ -9,6 +13,20 @@
     background: get-color(primary);
     border-radius: 1rem;
     color: get-color(on-primary);
+    margin-right: .5rem;
     padding: .3rem 1rem;
+
+    &.hide-side {
+      border-radius: 0 1rem 1rem 0;
+      margin-left: -1rem;
+      padding-left: 0;
+    }
+  }
+
+  .commit-id,
+  .post-id {
+    font-size: .7rem;
+    line-height: 1rem;
+    padding-right: .5rem;
   }
 }

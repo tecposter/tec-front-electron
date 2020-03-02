@@ -2,8 +2,12 @@ import { MultiCol } from './base';
 
 export default class PageCtn extends MultiCol {
   constructor() {
-    super(1, 1, 'page-ctn');
-
+    super({
+      resizeColCount: 1,
+      flexColCount: 1,
+      extraClass: 'page-ctn',
+      minColWidth: 210,
+    });
 
     this.sideBar = this.getCol(0);
     this.mainBoard = this.getCol(1);

@@ -106,7 +106,7 @@ const createMD = (ctn, content) => asCreateMarkdown(
   // postEditor.appendTo(pageCtn.getMainPanel());
   postCtn.appendTo(pageCtn.getMainPanel());
 
-  ctrl.regDefaultRendererCtrl(ipcRenderer, postList, postEditor);
+  ctrl.regDefaultRendererCtrl(ipcRenderer, postList, postEditor, postCtn);
   /*
   const ipcConnector = new IPCConnector(ipcRenderer);
   ipcConnector.onReceive('post.list', ({ posts }) => {

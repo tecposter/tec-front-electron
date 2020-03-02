@@ -1,6 +1,7 @@
 import { Base } from './base';
 import GapEvent from '../gap/GapEvent';
 import { createElem } from '../gap/web';
+import getCommittedTime from './util/getCommittedTime';
 
 const EVENT = {
   SELECT: 'select',
@@ -15,12 +16,26 @@ const SELECT_TYPE = {
 */
 
 const createPostInnerHTML = (post) => `
-  <a href="javascript:;" data-id="${post.id}">
+  <div class="title">
     ${post.title || 'untitiled'}
-  </a>
+  </div>
+  <span class="elapsed">
+    ${getCommittedTime(post)}
+  </span>
 `;
 
 let selected;
+
+const getPostElem = (evt) => {
+  const { target } = evt;
+  if (target.hasClass('post-item')) {
+    return target;
+  }
+  if (target.parentElement.hasClass('post-item')) {
+    return target.parentElement;
+  }
+  return null;
+};
 
 export default class PostList extends Base {
   constructor() {
@@ -37,11 +52,11 @@ export default class PostList extends Base {
   }
 
   handleClick(evt) {
-    const { target } = evt;
-    if (target.tagName.toLowerCase() !== 'a') {
+    const postElem = getPostElem(evt);
+    if (!postElem) {
       return;
     }
-    const id = target.getAttribute('data-id');
+    const id = postElem.getAttribute('data-id');
     const post = this.posts[id];
     if (!post) {
       throw new Error(`cannot find post id ${id}`);
@@ -72,7 +87,7 @@ export default class PostList extends Base {
     this.ctn.html`${postArr.map((post) => {
       this.posts[post.id] = post;
       return `
-      <div class="post-item" id="post-${post.id}">
+      <div class="post-item" id="post-${post.id}" data-id="${post.id}">
         ${createPostInnerHTML(post)}
       </div>
       `;

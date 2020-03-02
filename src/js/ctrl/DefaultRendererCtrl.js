@@ -5,10 +5,11 @@ import assertCMD from './assertCMD';
 import SavingStack from './util/SavingStack';
 
 export default class DefaultRendererCtrl {
-  constructor(ipcRenderer, postList, postEditor) {
+  constructor(ipcRenderer, postList, postEditor, postCtn) {
     this.ipcRenderer = ipcRenderer;
     this.postList = postList;
     this.postEditor = postEditor;
+    this.postCtn = postCtn;
     this.internalEvent = new GapEvent();
     this.wsEvent = new GapEvent();
     this.savingStack = new SavingStack();
@@ -21,6 +22,7 @@ export default class DefaultRendererCtrl {
     this.regPostList();
     this.regSavingStack();
     this.regPostEditor();
+    this.regPostCtn();
 
     this.sendWS('post.list');
   }
@@ -84,30 +86,40 @@ export default class DefaultRendererCtrl {
   }
 
   regWSReceiving() {
-    this.onWSReceive('post.list', ({ posts }) => this.postList.load(posts));
+    this.onWSReceive('post.list', ({ posts }) => {
+      this.postList.load(posts);
+      const { id: postID } = posts[0];
+      if (postID) {
+        this.sendWS('post.fetch', { postID });
+      }
+    });
 
     this.onWSReceive('post.fetch', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.select(post);
       this.postEditor.view(post);
+      this.postCtn.view(post);
     });
 
     this.onWSReceive('post.create', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.add(post);
       this.postEditor.preview(post);
+      this.postCtn.preview(post);
     });
 
     this.onWSReceive('post.edit', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.select(post);
       this.postEditor.preview(post);
+      this.postCtn.preview(post);
     });
 
     this.onWSReceive('post.commit', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.select(post);
       this.postEditor.view(post);
+      this.postCtn.view(post);
     });
 
     this.onWSReceive('draft.multiSave', () => {
@@ -129,6 +141,9 @@ export default class DefaultRendererCtrl {
       this.savingStack.prepare(post.id, this.postEditor.getContent());
       // this.sendWS('draft.save', { postID: post.id, content: this.postEditor.getContent() });
     });
+  }
+
+  regPostCtn() {
   }
 
   setCurrentPost(post) {

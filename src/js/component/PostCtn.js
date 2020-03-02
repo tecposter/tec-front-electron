@@ -1,8 +1,14 @@
 import { MultiCol } from './base';
+import getCommittedTime from './util/getCommittedTime';
 
 export default class PostCtn extends MultiCol {
   constructor() {
-    super(1, 1, 'post-ctn');
+    super({
+      resizeColCount: 1,
+      flexColCount: 1,
+      extraClass: 'post-ctn',
+      minColWidth: 245,
+    });
 
     this.side = this.getCol(0);
     this.main = this.getCol(1);
@@ -14,6 +20,22 @@ export default class PostCtn extends MultiCol {
     this.hideSideBtn.on('click', () => this.hideSide());
 
     this.hideSide();
+  }
+
+  view(post) {
+    this.setPost(post);
+    this.hideSide();
+  }
+
+  preview(post) {
+    this.setPost(post);
+    this.hideSide();
+  }
+
+  setPost(post) {
+    this.ctn.allElem('.post-id').forEach((elem) => elem.html`${post.id}`);
+    this.ctn.allElem('.commit-id').forEach((elem) => elem.html`${post.commitID}`);
+    this.ctn.allElem('.committed').forEach((elem) => elem.html`${getCommittedTime(post)}`);
   }
 
   hideSide() {
@@ -29,9 +51,13 @@ export default class PostCtn extends MultiCol {
   }
 
   initCols() {
-    this.getCol(0).html`
-    <div class="head">
-      side head
+    const sideBar = this.getCol(0);
+    sideBar.addClass('side-bar');
+    sideBar.html`
+    <div class="head primary-tint">
+      postID:
+      <span class="post-id">
+      </span>
     </div>
     <div class="body">
     </div>
@@ -40,12 +66,16 @@ export default class PostCtn extends MultiCol {
     this.getCol(1).html`
     <div class="head">
       <a class="show-side toggle">
-        Show Side
+        postID:<span class="post-id"></span>
         &gt;&gt;
       </a>
       <a class="hide-side toggle">
         &lt;&lt;
       </a>
+
+      commitID:<span class="commit-id"></span>
+
+      <span class="committed elapsed"></span>
     </div>
     <div class="body">
     </div>

@@ -1,7 +1,7 @@
 import { createElem } from '../../gap/web';
 import Base from './Base';
 
-const minColWidth = 100;
+// const minColWidth = 100;
 
 let currentCol = null;
 let currentCtn = null;
@@ -20,7 +20,7 @@ const validColWidth = (ctn) => {
   const len = ctn.children.length;
   for (let i = 0; i < len; i += 1) {
     const col = ctn.children[i];
-    if (col.offsetWidth <= minColWidth) {
+    if (col.offsetWidth <= ctn.minColWidth) {
       return false;
     }
   }
@@ -63,7 +63,12 @@ document.addEventListener('dragover', (evt) => {
 }, false);
 
 export default class MultiCol extends Base {
-  constructor(resizeColCount = 1, flexColCount = 1, extraClass = '') {
+  constructor({
+    resizeColCount,
+    flexColCount,
+    extraClass,
+    minColWidth,
+  }) {
     super('div', extraClass ? `multi-col ${extraClass}` : 'multi-col');
     const resizeCols = [];
     const flexCols = [];
@@ -76,6 +81,7 @@ export default class MultiCol extends Base {
       flexCols.push('<div class="col"></div>');
     }
 
+    this.ctn.minColWidth = minColWidth || 120;
     this.ctn.html`${resizeCols}${flexCols}`;
 
     this.initCols();
