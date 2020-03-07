@@ -1,14 +1,14 @@
-import GapEvent from '../gap/GapEvent';
+import { GapEvent } from '../gap';
 
 import { WS_MESSAGE, INTERNAL_MESSAGE } from './common';
 import assertCMD from './assertCMD';
 import SavingStack from './util/SavingStack';
 
-export default class DefaultRendererCtrl {
-  constructor(ipcRenderer, postList, postEditor, postCtn) {
+export default class DefaultRenderer {
+  constructor(ipcRenderer, postList, postCtn) {
     this.ipcRenderer = ipcRenderer;
     this.postList = postList;
-    this.postEditor = postEditor;
+    // this.postEditor = postEditor;
     this.postCtn = postCtn;
     this.internalEvent = new GapEvent();
     this.wsEvent = new GapEvent();
@@ -21,7 +21,7 @@ export default class DefaultRendererCtrl {
     this.regWSReceiving();
     this.regPostList();
     this.regSavingStack();
-    this.regPostEditor();
+    // this.regPostEditor();
     this.regPostCtn();
 
     this.sendWS('post.list');
@@ -80,7 +80,8 @@ export default class DefaultRendererCtrl {
       }
       const { id: postID } = currentPost;
       const contentType = 'md';
-      const content = this.postEditor.getContent();
+      // const content = this.postEditor.getContent();
+      const content = '';
       this.sendWS('post.commit', { postID, content, contentType });
     });
   }
@@ -97,28 +98,28 @@ export default class DefaultRendererCtrl {
     this.onWSReceive('post.fetch', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.select(post);
-      this.postEditor.view(post);
+      // this.postEditor.view(post);
       this.postCtn.view(post);
     });
 
     this.onWSReceive('post.create', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.add(post);
-      this.postEditor.preview(post);
+      // this.postEditor.preview(post);
       this.postCtn.preview(post);
     });
 
     this.onWSReceive('post.edit', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.select(post);
-      this.postEditor.preview(post);
+      // this.postEditor.preview(post);
       this.postCtn.preview(post);
     });
 
     this.onWSReceive('post.commit', ({ post }) => {
       this.setCurrentPost(post);
       this.postList.select(post);
-      this.postEditor.view(post);
+      // this.postEditor.view(post);
       this.postCtn.view(post);
     });
 
@@ -135,6 +136,7 @@ export default class DefaultRendererCtrl {
     this.savingStack.onSaving((drafts) => this.sendWS('draft.multiSave', { drafts }));
   }
 
+  /*
   regPostEditor() {
     this.postEditor.onChange(() => {
       const post = this.postEditor.getPost();
@@ -142,6 +144,7 @@ export default class DefaultRendererCtrl {
       // this.sendWS('draft.save', { postID: post.id, content: this.postEditor.getContent() });
     });
   }
+  */
 
   regPostCtn() {
   }

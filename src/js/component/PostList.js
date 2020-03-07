@@ -1,6 +1,4 @@
-import { Base } from './base';
-import GapEvent from '../gap/GapEvent';
-import { createElem } from '../gap/web';
+import { Component, GapEvent, createElem } from './base';
 import getCommittedTime from './util/getCommittedTime';
 
 const EVENT = {
@@ -37,7 +35,7 @@ const getPostElem = (evt) => {
   return null;
 };
 
-export default class PostList extends Base {
+export default class PostList extends Component {
   constructor() {
     super('div', 'post-list background-tint');
 

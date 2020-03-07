@@ -1,6 +1,6 @@
-import { Base } from './base';
+import { Component } from './base';
 
-export default class PostEditor extends Base {
+export default class PostEditor extends Component {
   constructor(markdown) {
     super('div', 'post-editor');
 

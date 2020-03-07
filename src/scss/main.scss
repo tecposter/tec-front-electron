@@ -7,6 +7,7 @@
 @import './post-editor';
 @import './post-ctn';
 @import './search-bar';
+@import "./commit-viewer";
 
 @include gap-typography;
 @include gap-color;
@@ -49,6 +50,11 @@ pre {
 
 .main-panel {
   height: 100%;
+}
+
+.small {
+  font-size: .7rem;
+  line-height: 1rem;
 }
 
 .diff {

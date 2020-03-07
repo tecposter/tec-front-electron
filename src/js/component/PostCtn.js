@@ -1,8 +1,9 @@
 import { MultiCol } from './base';
+import CommitViewer from './CommitViewer';
 import getCommittedTime from './util/getCommittedTime';
 
 export default class PostCtn extends MultiCol {
-  constructor() {
+  constructor(markdown) {
     super({
       resizeColCount: 1,
       flexColCount: 1,
@@ -18,13 +19,17 @@ export default class PostCtn extends MultiCol {
 
     this.showSideBtn.on('click', () => this.showSide());
     this.hideSideBtn.on('click', () => this.hideSide());
-
     this.hideSide();
+
+    this.markdown = markdown;
+    this.commitViewer = new CommitViewer(this.markdown.createParser());
+    this.commitViewer.appendTo(this.main);
   }
 
   view(post) {
     this.setPost(post);
     this.hideSide();
+    this.commitViewer.setContent(post.contentID, post.content);
   }
 
   preview(post) {
@@ -56,7 +61,7 @@ export default class PostCtn extends MultiCol {
     sideBar.html`
     <div class="head primary-tint">
       postID:
-      <span class="post-id">
+      <span class="post-id small">
       </span>
     </div>
     <div class="body">
@@ -66,14 +71,14 @@ export default class PostCtn extends MultiCol {
     this.getCol(1).html`
     <div class="head">
       <a class="show-side toggle">
-        postID:<span class="post-id"></span>
+        postID:<span class="post-id small"></span>
         &gt;&gt;
       </a>
       <a class="hide-side toggle">
         &lt;&lt;
       </a>
 
-      commitID:<span class="commit-id"></span>
+      commitID:<span class="commit-id small"></span>
 
       <span class="committed elapsed"></span>
     </div>

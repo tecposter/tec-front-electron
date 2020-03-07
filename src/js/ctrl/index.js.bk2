@@ -6,8 +6,8 @@ let gDefaultRendererCtrl;
 export default {
   getMainCtrl: () => mainCtrl,
 
-  regDefaultRendererCtrl: (ipcRenderer, postList, postEditor, postCtn) => {
-    gDefaultRendererCtrl = new DefaultRendererCtrl(ipcRenderer, postList, postEditor, postCtn);
+  regDefaultRendererCtrl: (ipcRenderer, postList, postCtn) => {
+    gDefaultRendererCtrl = new DefaultRendererCtrl(ipcRenderer, postList, postCtn);
   },
 
   getDefaultRendererCtrl: () => gDefaultRendererCtrl,

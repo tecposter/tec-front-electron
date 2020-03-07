@@ -1,17 +1,17 @@
-const DefaultContent = '# TecPoster Markdown Editor';
-
+import { Component } from './gap';
 /*
 Monaco editor dynamically resizable:
 https://stackoverflow.com/questions/47017753/monaco-editor-dynamically-resizable
 */
 
-export default class Coder {
-  constructor(monaco, ctnElem, content) {
-    this.monaco = monaco;
-    this.ctnElem = ctnElem;
-    this.content = content || DefaultContent;
+export default class Coder extends Component {
+  constructor(monaco, content) {
+    super('div', 'coder');
 
-    this.inner = this.monaco.editor.create(this.ctnElem, {
+    this.monaco = monaco;
+    this.content = content;
+
+    this.inner = this.monaco.editor.create(this.ctn, {
       value: this.content,
       language: 'markdown',
       wordWrap: 'wordWrapColumn',

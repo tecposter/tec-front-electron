@@ -1,4 +1,4 @@
-import { createElem } from '../../gap/web';
+import { createElem } from '../../gap';
 import asSingle from '../util/as-single';
 import { asLoadJs, asLoadRes } from '../util/asset-loader';
 

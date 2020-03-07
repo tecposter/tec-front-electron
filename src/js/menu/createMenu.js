@@ -1,8 +1,7 @@
 import { Menu } from 'electron';
-import ctrl from '../ctrl';
+import mainCtrl from '../ctrl/mainCtrl';
 
 const isMac = process.platform === 'darwin';
-const mainCtrl = ctrl.getMainCtrl();
 
 const createMenu = () => {
   const template = [

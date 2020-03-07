@@ -1,4 +1,9 @@
-import Base from './Base';
+import { Component, GapEvent, createElem } from '../../gap';
 import MultiCol from './MultiCol';
 
-export { Base, MultiCol };
+export {
+  Component,
+  MultiCol,
+  GapEvent,
+  createElem,
+};

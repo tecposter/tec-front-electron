@@ -1,4 +1,4 @@
-import { oneElem, createElem } from '../../gap/web';
+import { oneElem, createElem } from '../../gap';
 
 const eachProp = (obj, fun) => {
   Object.keys(obj).forEach((key) => {

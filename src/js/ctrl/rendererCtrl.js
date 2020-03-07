@@ -1,34 +1,11 @@
-import WebSocket from 'ws';
-import DefaultRendererCtrl from './DefaultRendererCtrl';
-import { MESSAGE, WS_MESSAGE } from './common';
+import DefaultRenderer from './DefaultRenderer';
 
-let gDefaultRendererCtrl;
+let gDefaultRenderer;
 
-const rendererCtrl = {
-  regDefaultRendererCtrl: (ipcRenderer, postList, postEditor) => {
-    gDefaultRendererCtrl = new DefaultRendererCtrl(ipcRenderer, postList, postEditor);
+export default {
+  regDefaultRenderer: (ipcRenderer, postList, postCtn) => {
+    gDefaultRenderer = new DefaultRenderer(ipcRenderer, postList, postCtn);
   },
 
-  getDefaultRendererCtrl: () => gDefaultRendererCtrl,
-
-  sendWS: (cmd, params) => gWS.send(JSON.stringify({ cmd, params })),
-
-  triggerCreatePost: () => ctrl.sendWS('post.create'),
-
-  triggerEditPost: () => {
-    console.log(gDefaultRendererCtrl);
-
-    if (!gDefaultRendererCtrl) {
-      return;
-    }
-    const currentPost = gDefaultRendererCtrl.getCurrentPost();
-
-    console.log(currentPost);
-    if (!currentPost) {
-      return;
-    }
-    ctrl.sendWS('post.edit', { postID: currentPost.id });
-  },
+  getDefaultRenderer: () => gDefaultRenderer,
 };
-
-export default rendererCtrl;

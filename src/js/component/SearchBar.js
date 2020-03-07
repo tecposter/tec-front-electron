@@ -1,6 +1,6 @@
-import { Base } from './base';
+import { Component } from './base';
 
-export default class SearchBar extends Base {
+export default class SearchBar extends Component {
   constructor() {
     super('div', 'search-bar');
 

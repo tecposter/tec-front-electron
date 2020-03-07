@@ -56,10 +56,9 @@ import {
   PageCtn,
   SearchBar,
   PostList,
-  PostEditor,
   PostCtn,
 } from './js/component';
-import ctrl from './js/ctrl';
+import rendererCtrl from './js/ctrl/rendererCtrl';
 
 /*
 const pageElem = oneElem('.page');
@@ -97,37 +96,14 @@ const createMD = (ctn, content) => asCreateMarkdown(
   const postList = new PostList();
 
   const markdown = await asCreateMarkdown(config.markdown);
-  const postEditor = new PostEditor(markdown);
-  const postCtn = new PostCtn();
+  const postCtn = new PostCtn(markdown);
 
   pageCtn.appendTo(window.document.body);
   searchBar.appendTo(pageCtn.getSideBar());
   postList.appendTo(pageCtn.getSideBar());
-  // postEditor.appendTo(pageCtn.getMainPanel());
   postCtn.appendTo(pageCtn.getMainPanel());
 
-  ctrl.regDefaultRendererCtrl(ipcRenderer, postList, postEditor, postCtn);
-  /*
-  const ipcConnector = new IPCConnector(ipcRenderer);
-  ipcConnector.onReceive('post.list', ({ posts }) => {
-    postList.load(posts);
-  });
-  ipcConnector.onReceive('post.fetch', ({ post }) => {
-    postEditor.view(post);
-  });
-  ipcConnector.onReceive('post.create', ({ post }) => {
-    postList.add(post);
-  });
-
-  ipcConnector.connect();
-  ipcConnector.send('post.list');
-
-  postList.onSelect((post, selectType) => {
-    if (selectType === PostList.ACTION.VIEW) {
-      ipcConnector.send('post.fetch', { postID: post.id });
-    }
-  });
-  */
+  rendererCtrl.regDefaultRenderer(ipcRenderer, postList, postCtn);
 
   /*
   const menu = new Menu();

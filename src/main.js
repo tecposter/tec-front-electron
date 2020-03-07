@@ -3,7 +3,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 // import { WSConnector } from './js/connector';
 import config from './js/config';
 import createMenu from './js/menu/createMenu';
-import ctrl from './js/ctrl';
+import mainCtrl from './js/ctrl/mainCtrl';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -18,7 +18,7 @@ let mainWindow;
 const wsConnector = new WSConnector(config.ws.addr, ipcMain);
 wsConnector.connect();
 */
-const mainCtrl = ctrl.getMainCtrl();
+// const mainCtrl = ctrl.getMainCtrl();
 mainCtrl.connectWS(ipcMain, config.ws.addr);
 
 const createWindow = () => {
