@@ -1,5 +1,6 @@
 import { MultiCol } from './base';
 import CommitViewer from './CommitViewer';
+import DraftEditor from './DraftEditor';
 import getCommittedTime from './util/getCommittedTime';
 
 export default class PostCtn extends MultiCol {
@@ -13,6 +14,9 @@ export default class PostCtn extends MultiCol {
 
     this.side = this.getCol(0);
     this.main = this.getCol(1);
+    this.main.addClass('main');
+
+    this.body = this.main.oneElem('.body');
 
     this.showSideBtn = this.main.oneElem('.show-side');
     this.hideSideBtn = this.main.oneElem('.hide-side');
@@ -23,18 +27,28 @@ export default class PostCtn extends MultiCol {
 
     this.markdown = markdown;
     this.commitViewer = new CommitViewer(this.markdown.createParser());
-    this.commitViewer.appendTo(this.main);
+    this.commitViewer.appendTo(this.body);
+    this.commitViewer.hide();
+
+    this.draftEditor = new DraftEditor(this.markdown.createEditor());
+    this.draftEditor.appendTo(this.body);
+    this.draftEditor.hide();
   }
 
   view(post) {
     this.setPost(post);
     this.hideSide();
     this.commitViewer.setContent(post.contentID, post.content);
+    this.commitViewer.show();
+    this.draftEditor.hide();
   }
 
   preview(post) {
     this.setPost(post);
     this.hideSide();
+    this.draftEditor.setContent(post.draft || post.content);
+    this.draftEditor.show();
+    this.commitViewer.hide();
   }
 
   setPost(post) {

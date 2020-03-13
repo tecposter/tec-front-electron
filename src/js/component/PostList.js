@@ -54,6 +54,9 @@ export default class PostList extends Component {
     if (!postElem) {
       return;
     }
+    if (postElem.hasClass('selected')) {
+      return;
+    }
     const id = postElem.getAttribute('data-id');
     const post = this.posts[id];
     if (!post) {

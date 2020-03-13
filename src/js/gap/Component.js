@@ -6,6 +6,14 @@ export default class Component {
     this.ctn.addClass(classNames);
   }
 
+  show() {
+    this.ctn.show();
+  }
+
+  hide() {
+    this.ctn.hide();
+  }
+
   appendTo(node) {
     if (node instanceof Node) {
       node.appendChild(this.ctn);

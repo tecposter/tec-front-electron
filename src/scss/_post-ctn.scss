@@ -27,4 +27,26 @@
   .post-id {
     padding-right: .5rem;
   }
+
+  .main {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .head {
+      box-sizing: border-box;
+      flex: 0 0 auto;
+    }
+
+    .body {
+      box-sizing: border-box;
+      flex: 1 1 auto;
+      height: 100%;
+    }
+  }
+
+  .draft-editor {
+    height: 100%;
+  }
 }

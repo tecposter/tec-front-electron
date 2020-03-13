@@ -60,12 +60,11 @@ export default class Editor extends Component {
     this.register();
 
     this.previewMode();
-    window.on('resize', () => this.adjustLayout());
   }
 
   appendTo(node) {
     if (node instanceof Node) {
-      node.appendChild(this.ctnElem);
+      node.appendChild(this.ctn);
     }
   }
 
@@ -103,14 +102,6 @@ export default class Editor extends Component {
     this.previewElem.innerHTML = this.parser.toHTML(content);
   }
 
-  adjustLayout() {
-    if (this.mode === MODE.PREVIEW) {
-      const colWidth = this.ctnElem.offsetWidth / 2;
-      this.coderWrap.style.width = `${colWidth}px`;
-      this.previewWrap.style.width = `${colWidth}px`;
-    }
-  }
-
   viewMode() {
     this.mode = MODE.VIEW;
     this.coderWrap.hide();
@@ -129,7 +120,6 @@ export default class Editor extends Component {
     this.mode = MODE.PREVIEW;
     this.previewWrap.show();
     this.coderWrap.show();
-    this.adjustLayout();
   }
 
   onChange(fun) {

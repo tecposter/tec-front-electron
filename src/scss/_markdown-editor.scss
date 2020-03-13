@@ -7,9 +7,11 @@ $editor-item-margin: auto;
   width: 100%;
 
   & > .item {
+    box-sizing: border-box;
+    flex: 1 1 200px;
     height: 100%;
     margin: $editor-item-margin;
-    width: 50%;
+    width: 100px;
   }
 
   & > .coder-section {
