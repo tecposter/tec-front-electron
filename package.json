@@ -72,7 +72,7 @@
     "gap-front-web": "^1.2.15",
     "highlight.js": "^9.17.1",
     "katex": "^0.11.1",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^12.3.2",
     "monaco-editor": "^0.18.1",
     "electron": "6.0.9",
     "ws": "^7.2.1"
